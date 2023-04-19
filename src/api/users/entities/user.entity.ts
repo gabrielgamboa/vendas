@@ -10,4 +10,11 @@ export class User {
   age: number;
   @Column({ length: 120 })
   email: string;
+
+  constructor(user?: Partial<User>) {
+    this.id = user.id;
+    this.name = user.name;
+    this.age = user.age;
+    this.email = user.email;
+  }
 }
