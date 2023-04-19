@@ -7,13 +7,13 @@ export default (): TypeOrmModuleOptions => {
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '1234',
+    password: 'postgres',
     database: 'booktop',
     entities: [
       join(__dirname, '..', '..', 'api', '**', 'entities', '*.entity.{ts,js}'),
     ],
     migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
-    synchronize: false,
+    synchronize: true,
   };
 
   return DatabaseProvider;

@@ -45,5 +45,12 @@ describe('UsersService', () => {
       expect(users).toBe(users);
       expect(usersRepository.find).toHaveBeenCalledTimes(1);
     });
+
+    it('should throw an exception', () => {
+      expect(async () => {
+        jest.spyOn(usersRepository, 'find').mockRejectedValue(new Error());
+        await usersService.findAll();
+      }).rejects.toThrow()
+    });
   });
 });
