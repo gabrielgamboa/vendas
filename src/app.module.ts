@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserModule } from './app/user/user.module';
 import DatabaseProvider from './infra/db/database';
 
-//TODO:
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       useFactory: DatabaseProvider,
     }),
+    UserModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
