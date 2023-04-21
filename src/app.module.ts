@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './app/user/user.module';
+import { UserModule } from './app/user/users.module';
 import DatabaseProvider from './infra/db/database';
 import { ConfigModule } from '@nestjs/config';
 
@@ -15,4 +15,4 @@ import { ConfigModule } from '@nestjs/config';
     UserModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }

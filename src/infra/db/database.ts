@@ -10,7 +10,7 @@ export default (): TypeOrmModuleOptions => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     entities: [
-      join(__dirname, '..', '..', 'api', '**', 'entities', '*.entity.{ts,js}'),
+      join(__dirname, '..', '..', 'app', '**', 'entities', '*.entity.{ts,js}'),
     ],
     migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
     synchronize: true,
