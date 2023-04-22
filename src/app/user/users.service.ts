@@ -10,14 +10,21 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async createUser(data: CreateUserDto): Promise<User> {
     const saltOrRounds = 10;
     const passwordHash = await hash(data.password, saltOrRounds);
 
+    console.log({
+      ...data,
+      typeUser: 1,
+      password: passwordHash,
+    });
+
     return await this.usersRepository.save({
       ...data,
+      typeUser: 1,
       password: passwordHash,
     });
   }
