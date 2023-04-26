@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity('address')
-export class User {
+export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 

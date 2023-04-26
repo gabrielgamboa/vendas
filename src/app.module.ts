@@ -3,9 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './app/user/users.module';
 import DatabaseProvider from './infra/db/database';
 import { ConfigModule } from '@nestjs/config';
-import { AddressModule } from './src/app/address/address.module';
-import { CityModule } from './src/app/city/city.module';
-import { StateModule } from './src/app/state/state.module';
 import { AddressModule } from './app/address/address.module';
 import { StateModule } from './app/state/state.module';
 import { CityModule } from './app/city/city.module';
@@ -24,4 +21,4 @@ import { CityModule } from './app/city/city.module';
     StateModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
