@@ -21,4 +21,4 @@ import { CityModule } from './app/city/city.module';
     StateModule,
   ],
 })
-export class AppModule {}
+export class AppModule { }
