@@ -23,4 +23,4 @@ import { CacheModule } from './app/cache/cache.module';
     CacheModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
