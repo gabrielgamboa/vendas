@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AddressModule } from './app/address/address.module';
 import { StateModule } from './app/state/state.module';
 import { CityModule } from './app/city/city.module';
+import { CacheModule } from './app/cache/cache.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CityModule } from './app/city/city.module';
     AddressModule,
     CityModule,
     StateModule,
+    CacheModule,
   ],
 })
 export class AppModule { }
