@@ -1,21 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { City } from './entities/city.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
+import { CacheService } from '../cache/cache.service';
 
 @Injectable()
 export class CityService {
   constructor(
     @InjectRepository(City)
     private citiesRepository: Repository<City>,
-    @Inject(CACHE_MANAGER)
-    private cacheManager: Cache,
-  ) { }
+    private cacheService: CacheService,
+  ) {}
 
   async getByStateId(stateId: number): Promise<City[]> {
-    const citiesInCache: City[] = await this.cacheManager.get(
+    const citiesInCache = await this.cacheService.getCache<City[]>(
       `state_${stateId}`,
     );
 
@@ -25,7 +23,7 @@ export class CityService {
       where: { stateId },
     });
 
-    await this.cacheManager.set(`state_${stateId}`, cities);
+    await this.cacheService.setCache<City[]>(`state_${stateId}`, cities);
 
     return cities;
   }
