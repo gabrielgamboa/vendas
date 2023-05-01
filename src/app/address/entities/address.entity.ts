@@ -14,11 +14,11 @@ export class Address {
   @Column({ name: 'user_id', nullable: false })
   userId: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   complement: string;
 
   @Column({ nullable: false })
-  number: string;
+  number: number;
 
   @Column({ nullable: false })
   cep: string;

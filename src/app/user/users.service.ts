@@ -16,12 +16,6 @@ export class UserService {
     const saltOrRounds = 10;
     const passwordHash = await hash(data.password, saltOrRounds);
 
-    console.log({
-      ...data,
-      typeUser: 1,
-      password: passwordHash,
-    });
-
     return await this.usersRepository.save({
       ...data,
       typeUser: 1,
