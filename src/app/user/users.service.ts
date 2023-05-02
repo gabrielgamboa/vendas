@@ -10,7 +10,7 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
-  ) { }
+  ) {}
 
   async createUser(data: CreateUserDto): Promise<User> {
     const saltOrRounds = 10;
@@ -32,6 +32,19 @@ export class UserService {
       where: {
         id: userId,
       },
+    });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    return user;
+  }
+
+  async getUserByIdUsingReferences(userId: number): Promise<User> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: userId,
+      },
+      relations: ['addresses'],
     });
 
     if (!user) throw new NotFoundException('User not found');
