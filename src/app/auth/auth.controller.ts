@@ -12,6 +12,7 @@ import {
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { ReturnUserDto } from '../user/dtos/return-user-dto';
+import { ReturnLoginDto } from './dto/return-login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -19,7 +20,7 @@ export class AuthController {
 
   @Post()
   @UsePipes(new ValidationPipe())
-  async login(@Body() loginDto: LoginDto) {
-    return new ReturnUserDto(await this.authService.login(loginDto));
+  async login(@Body() loginDto: LoginDto): Promise<ReturnLoginDto> {
+    return this.authService.login(loginDto);
   }
 }
