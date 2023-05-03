@@ -13,7 +13,7 @@ import { ReturnUserDto } from './dtos/return-user-dto';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
   async getAll(): Promise<ReturnUserDto[]> {
@@ -26,7 +26,9 @@ export class UserController {
   async getUserByIdUsingReferences(
     @Param('userId') userId: number,
   ): Promise<ReturnUserDto> {
-    return await this.userService.getUserByIdUsingReferences(userId);
+    return new ReturnUserDto(
+      await this.userService.getUserByIdUsingReferences(userId),
+    );
   }
 
   @Post()
