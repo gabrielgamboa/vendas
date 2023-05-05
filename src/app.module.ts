@@ -8,6 +8,7 @@ import { StateModule } from './app/state/state.module';
 import { CityModule } from './app/city/city.module';
 import { CacheModule } from './app/cache/cache.module';
 import { AuthModule } from './app/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AuthModule } from './app/auth/auth.module';
     StateModule,
     CacheModule,
     AuthModule,
+    JwtModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

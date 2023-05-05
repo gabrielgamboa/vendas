@@ -11,12 +11,11 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { ReturnUserDto } from '../user/dtos/return-user-dto';
 import { ReturnLoginDto } from './dto/return-login.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post()
   @UsePipes(new ValidationPipe())
