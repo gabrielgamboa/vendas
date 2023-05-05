@@ -10,7 +10,7 @@ export class RolesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<UserType[]>(
@@ -22,22 +22,8 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest();
-    const [, authorization] = context
-      .switchToHttp()
-      .getRequest()
-      .headers.authorization.split(' ');
+    const { user } = context.switchToHttp().getRequest();
 
-    const loginPayload: LoginPayload | undefined = await this.jwtService
-      .verifyAsync(authorization, {
-        secret: process.env.JWT_SECRET,
-      })
-      .catch(() => undefined);
-
-    if (!loginPayload) {
-      return false;
-    }
-
-    return requiredRoles.some((role) => role === loginPayload.typeUser);
+    return requiredRoles.some((role) => role === user.typeUser);
   }
 }

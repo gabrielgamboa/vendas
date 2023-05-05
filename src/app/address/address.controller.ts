@@ -9,14 +9,14 @@ import {
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dtos/create-address.dto';
 import { UserType } from '../user/enum/user-type.enum';
-import { Roles } from '../decorators/roles.decorators';
+import { AuthenticateAndAuthorizateGuard } from '../guards';
 
 @Controller('address')
 export class AddressController {
-  constructor(private readonly addressService: AddressService) { }
+  constructor(private readonly addressService: AddressService) {}
 
   @Post('/:userId')
-  @Roles(UserType.User)
+  @AuthenticateAndAuthorizateGuard(UserType.User)
   @UsePipes(ValidationPipe)
   async createAddress(
     @Body() data: CreateAddressDto,
