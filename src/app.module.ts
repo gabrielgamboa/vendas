@@ -9,6 +9,8 @@ import { CityModule } from './app/city/city.module';
 import { CacheModule } from './app/cache/cache.module';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './app/guards/roles.guard';
 
 @Module({
   imports: [
@@ -18,13 +20,19 @@ import { JwtModule } from '@nestjs/jwt';
     TypeOrmModule.forRootAsync({
       useFactory: DatabaseProvider,
     }),
+    JwtModule,
     UserModule,
     AddressModule,
     CityModule,
     StateModule,
     CacheModule,
     AuthModule,
-    JwtModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
   ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -8,16 +8,15 @@ import {
 } from '@nestjs/common';
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dtos/create-address.dto';
-import { Roles } from '../decorators/roles.decorators';
 import { UserType } from '../user/enum/user-type.enum';
-import { AuthenticateAndAuthorizateGuard } from '../guards';
+import { Roles } from '../decorators/roles.decorators';
 
 @Controller('address')
 export class AddressController {
-  constructor(private readonly addressService: AddressService) {}
+  constructor(private readonly addressService: AddressService) { }
 
   @Post('/:userId')
-  @AuthenticateAndAuthorizateGuard()
+  @Roles(UserType.User)
   @UsePipes(ValidationPipe)
   async createAddress(
     @Body() data: CreateAddressDto,

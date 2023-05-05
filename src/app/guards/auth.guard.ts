@@ -5,14 +5,14 @@ import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private reflector: Reflector,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private jwtService: JwtService) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const { authorization } = context.switchToHttp().getRequest().headers;
+    const [, authorization] = context
+      .switchToHttp()
+      .getRequest()
+      .headers.authorization.split(' ');
 
     const loginPayload: LoginPayload | undefined = await this.jwtService
       .verifyAsync(authorization, {
