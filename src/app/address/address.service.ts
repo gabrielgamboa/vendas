@@ -17,7 +17,7 @@ export class AddressService {
 
   async createAddress(data: CreateAddressDto, userId: number) {
     await this.userService.findUserById(userId);
-    await this.cityService.getCityById(data.cityId);
+    await this.cityService.findCityById(data.cityId);
 
     return await this.addressRepository.save({
       ...data,

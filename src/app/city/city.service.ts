@@ -10,9 +10,9 @@ export class CityService {
     @InjectRepository(City)
     private citiesRepository: Repository<City>,
     private cacheService: CacheService,
-  ) {}
+  ) { }
 
-  async getByStateId(stateId: number): Promise<City[]> {
+  async getAllCitiesByStateId(stateId: number): Promise<City[]> {
     const citiesInCache = await this.cacheService.getCache<City[]>(
       `state_${stateId}`,
     );
@@ -28,7 +28,7 @@ export class CityService {
     return cities;
   }
 
-  async getCityById(cityId: number) {
+  async findCityById(cityId: number) {
     const city = await this.citiesRepository.findOne({
       where: {
         id: cityId,

@@ -26,5 +26,5 @@ export class State {
   updatedAt: Date;
 
   @OneToMany(() => City, (city) => city.state)
-  cities: City[];
+  cities?: City[];
 }

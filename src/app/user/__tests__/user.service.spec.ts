@@ -36,7 +36,7 @@ describe('UserService', () => {
   it('should create user in createUser', async () => {
     jest.spyOn(userRepository, 'findOne').mockResolvedValue(undefined);
     const user = await service.createUser(createUserMock);
-    expect(user).toBe(userMock);
+    expect(user).toEqual(userMock);
   });
 
   it('should not create user in createUser if email already exists', async () => {
@@ -45,7 +45,7 @@ describe('UserService', () => {
 
   it('should return user in findUserByEmail', async () => {
     const user = await service.findUserByEmail(userMock.email);
-    expect(user).toBe(userMock);
+    expect(user).toEqual(userMock);
   });
 
   it('should not return user if email dont exists', async () => {
@@ -57,12 +57,17 @@ describe('UserService', () => {
 
   it('should return user in findUserById', async () => {
     const user = await service.findUserById(userMock.id);
-    expect(user).toBe(user);
+    expect(user).toEqual(user);
   });
 
   it('should not return user in findUserById if user does not exists', async () => {
     jest.spyOn(userRepository, 'findOne').mockResolvedValue(undefined);
     expect(service.findUserById(userMock.id)).rejects.toThrowError();
+  });
+
+  it('should return user in findUserByIdUsingReferences', async () => {
+    const user = await service.findUserByIdUsingReferences(userMock.id);
+    expect(user).toEqual(userMock);
   });
 
   it('should not return user in findUserByIdUsingReferences if user does not exists', async () => {
