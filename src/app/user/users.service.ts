@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './entities/user.entity';
 import { hash } from 'bcrypt';
@@ -13,6 +17,12 @@ export class UserService {
   ) { }
 
   async createUser(data: CreateUserDto): Promise<User> {
+    const emailAlreadyExists = await this.findUserByEmail(data.email).catch(
+      () => undefined,
+    );
+
+    if (emailAlreadyExists)
+      throw new BadRequestException('Email registered in system');
     const saltOrRounds = 10;
     const passwordHash = await hash(data.password, saltOrRounds);
 
@@ -27,7 +37,7 @@ export class UserService {
     return await this.usersRepository.find();
   }
 
-  async getUserById(userId: number): Promise<User> {
+  async findUserById(userId: number): Promise<User> {
     const user = await this.usersRepository.findOne({
       where: {
         id: userId,
@@ -39,7 +49,7 @@ export class UserService {
     return user;
   }
 
-  async getUserByIdUsingReferences(userId: number): Promise<User> {
+  async findUserByIdUsingReferences(userId: number): Promise<User> {
     const user = await this.usersRepository.findOne({
       where: {
         id: userId,
@@ -63,7 +73,8 @@ export class UserService {
       where: { email },
     });
 
-    if (!user) throw new NotFoundException('User not found');
+    if (!user)
+      throw new NotFoundException(`User with email ${email} not found`);
 
     return user;
   }

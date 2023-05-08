@@ -13,10 +13,10 @@ export class AddressService {
     private readonly addressRepository: Repository<Address>,
     private readonly userService: UserService,
     private readonly cityService: CityService,
-  ) {}
+  ) { }
 
   async createAddress(data: CreateAddressDto, userId: number) {
-    await this.userService.getUserById(userId);
+    await this.userService.findUserById(userId);
     await this.cityService.getCityById(data.cityId);
 
     return await this.addressRepository.save({

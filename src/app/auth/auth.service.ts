@@ -13,10 +13,10 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(data: LoginDto): Promise<ReturnLoginDto> {
-    const user: User | undefined = await this.userService
+    const user = await this.userService
       .findUserByEmail(data.email)
       .catch(() => undefined);
 

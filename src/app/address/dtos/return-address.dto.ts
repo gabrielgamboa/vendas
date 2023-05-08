@@ -1,4 +1,4 @@
-import { ReturnCityDto } from 'src/app/city/dtos/return-city.dto';
+import { ReturnCityDto } from '../../city/dtos/return-city.dto';
 import { Address } from '../entities/address.entity';
 
 export class ReturnAddressDto {

@@ -1,5 +1,5 @@
-import { Address } from 'src/app/address/entities/address.entity';
-import { State } from 'src/app/state/entities/state.entity';
+import { Address } from '../../address/entities/address.entity';
+import { State } from '../../state/entities/state.entity';
 import {
   Column,
   CreateDateColumn,
