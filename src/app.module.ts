@@ -9,7 +9,6 @@ import { CityModule } from './app/city/city.module';
 import { CacheModule } from './app/cache/cache.module';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { User2Service } from './user2/user2.service';
 
 @Module({
   imports: [
@@ -27,6 +26,5 @@ import { User2Service } from './user2/user2.service';
     CacheModule,
     AuthModule,
   ],
-  providers: [User2Service],
 })
-export class AppModule {}
+export class AppModule { }
