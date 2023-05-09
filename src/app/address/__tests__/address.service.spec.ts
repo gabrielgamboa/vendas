@@ -60,4 +60,18 @@ describe('AddressService', () => {
     const address = await service.createAddress(createAddressMock, userMock.id);
     expect(address).toEqual(addressMock);
   });
+
+  it('should return error in create address when user is not found', async () => {
+    jest.spyOn(userService, 'findUserById').mockRejectedValueOnce(new Error());
+    expect(
+      service.createAddress(createAddressMock, userMock.id),
+    ).rejects.toThrowError();
+  });
+
+  it('should return error in create address when city is not found', async () => {
+    jest.spyOn(cityService, 'findCityById').mockRejectedValueOnce(new Error());
+    expect(
+      service.createAddress(createAddressMock, userMock.id),
+    ).rejects.toThrowError();
+  });
 });
