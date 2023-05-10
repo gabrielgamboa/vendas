@@ -9,6 +9,7 @@ import { userMock } from '../../user/__mocks__/user.mock';
 import { UserService } from '../../user/users.service';
 import { CityService } from '../../city/city.service';
 import { cityMock } from '../../city/__mocks__/city.mock';
+import { NotFoundException } from '@nestjs/common';
 
 describe('AddressService', () => {
   let service: AddressService;
@@ -36,6 +37,7 @@ describe('AddressService', () => {
           provide: getRepositoryToken(Address),
           useValue: {
             save: jest.fn().mockResolvedValue(addressMock),
+            find: jest.fn().mockResolvedValue([addressMock]),
           },
         },
       ],
@@ -73,5 +75,19 @@ describe('AddressService', () => {
     expect(
       service.createAddress(createAddressMock, userMock.id),
     ).rejects.toThrowError();
+  });
+
+  it('should be able to list all addresses to user', async () => {
+    const addresses = await service.findAddressByUserId(userMock.id);
+    expect(addresses).toEqual([addressMock]);
+    expect(addresses.length).toBeGreaterThan(0);
+  });
+
+  it('should return error if user has no address registred', async () => {
+    jest.spyOn(addressRepository, 'find').mockResolvedValue(undefined);
+    expect(service.findAddressByUserId(userMock.id)).rejects.toThrowError();
+    expect(service.findAddressByUserId(userMock.id)).rejects.toBeInstanceOf(
+      NotFoundException,
+    );
   });
 });
