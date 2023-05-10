@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { LoginPayload } from '../auth/dtos/login-payload.dto';
+import { LoginPayloadDto } from '../auth/dtos/login-payload.dto';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
       .getRequest()
       .headers.authorization.split(' ');
 
-    const loginPayload: LoginPayload | undefined = await this.jwtService
+    const loginPayload: LoginPayloadDto | undefined = await this.jwtService
       .verifyAsync(authorization, {
         secret: process.env.JWT_SECRET,
       })

@@ -1,12 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dtos/login.dto';
-import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/users.service';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ReturnLoginDto } from './dtos/return-login.dto';
 import { ReturnUserDto } from '../user/dtos/return-user-dto';
-import { LoginPayload } from './dtos/login-payload.dto';
+import { LoginPayloadDto } from './dtos/login-payload.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +25,7 @@ export class AuthService {
       throw new UnauthorizedException('Email or password invalid');
 
     return {
-      accessToken: this.jwtService.sign({ ...new LoginPayload(user) }),
+      accessToken: this.jwtService.sign({ ...new LoginPayloadDto(user) }),
       user: new ReturnUserDto(user),
     };
   }

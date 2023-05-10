@@ -6,7 +6,7 @@ import { userMock } from '../user/__mocks__/user.mock';
 import { jwtMock } from './__mocks__/jwt.mock';
 import { loginMock } from './__mocks__/login-payload.mock';
 import { ReturnUserDto } from '../user/dtos/return-user-dto';
-import { BadGatewayException, UnauthorizedException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;

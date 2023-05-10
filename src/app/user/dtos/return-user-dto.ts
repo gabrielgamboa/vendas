@@ -18,8 +18,8 @@ export class ReturnUserDto {
     this.cpf = user.cpf;
     this.addresses = user.addresses
       ? user.addresses.map(
-        (address) => new ReturnAddressDto(address as Address),
-      )
+          (address) => new ReturnAddressDto(address as Address),
+        )
       : undefined;
   }
 }
