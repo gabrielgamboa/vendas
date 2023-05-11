@@ -58,6 +58,9 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Diagrama do Banco de Dados
+[Diagrama do Banco de Dados](https://img-c.udemycdn.com/redactor/raw/q_and_a/2023-05-11_00-14-17-7ada9cfd134503a6df625e3f01352914.png)
+
 
 # Testes unitários
 
