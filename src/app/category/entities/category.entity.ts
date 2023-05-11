@@ -1,4 +1,4 @@
-import { Product } from 'src/app/product/entities/product.entity';
+import { Product } from '../../product/entities/product.entity';
 import {
   Column,
   CreateDateColumn,
