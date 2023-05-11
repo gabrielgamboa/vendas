@@ -9,6 +9,8 @@ import { CityModule } from './app/city/city.module';
 import { CacheModule } from './app/cache/cache.module';
 import { AuthModule } from './app/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { CategoryModule } from './app/category/category.module';
+import { ProductModule } from './app/product/product.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { JwtModule } from '@nestjs/jwt';
     StateModule,
     CacheModule,
     AuthModule,
+    CategoryModule,
+    ProductModule,
   ],
 })
 export class AppModule { }
