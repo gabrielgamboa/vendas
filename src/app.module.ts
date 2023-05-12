@@ -31,4 +31,4 @@ import { ProductModule } from './app/product/product.module';
     ProductModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}
