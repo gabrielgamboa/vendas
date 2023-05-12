@@ -25,7 +25,7 @@ export class CategoryController {
   }
 
   @Post()
-  @AuthenticateAndAuthorizateGuard(UserType.Admin, UserType.User)
+  @AuthenticateAndAuthorizateGuard(UserType.Admin)
   @UsePipes(ValidationPipe)
   async createCategory(@Body() data: CreateCategoryDto) {
     return await this.categoryService.createCategory(data);
