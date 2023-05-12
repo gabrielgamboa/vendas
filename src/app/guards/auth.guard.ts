@@ -8,23 +8,28 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const [, authorization] = context
-      .switchToHttp()
-      .getRequest()
-      .headers.authorization.split(' ');
 
-    const loginPayload: LoginPayloadDto | undefined = await this.jwtService
-      .verifyAsync(authorization, {
-        secret: process.env.JWT_SECRET,
-      })
-      .catch(() => undefined);
+    try {
+      const [, authorization] = context
+        .switchToHttp()
+        .getRequest()
+        .headers.authorization.split(' ');
 
-    if (!loginPayload) {
+      const loginPayload: LoginPayloadDto | undefined = await this.jwtService
+        .verifyAsync(authorization, {
+          secret: process.env.JWT_SECRET,
+        })
+        .catch(() => undefined);
+
+      if (!loginPayload) {
+        return false;
+      }
+
+      request['user'] = loginPayload;
+
+      return true;
+    } catch (err) {
       return false;
     }
-
-    request['user'] = loginPayload;
-
-    return true;
   }
 }
