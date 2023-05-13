@@ -37,6 +37,13 @@ export class CategoryService {
     return category;
   }
 
+  async findCategoryById(id: number): Promise<Category> {
+    const category = await this.categoryRepository.findOne({ where: { id } });
+    if (!category) throw new BadRequestException('Category not found');
+
+    return category;
+  }
+
   async findAllCategories(): Promise<Category[]> {
     const categories = await this.categoryRepository.find();
 

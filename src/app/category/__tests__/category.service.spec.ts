@@ -54,6 +54,18 @@ describe('CategoryService', () => {
     );
   });
 
+  it('should be able to find category by id', async () => {
+    const category = await service.findCategoryById(categoryMock.id);
+    expect(category).toEqual(categoryMock);
+  });
+
+  it('should return error if find category by id not found', async () => {
+    jest.spyOn(categoryRepository, 'findOne').mockResolvedValue(null);
+    expect(service.findCategoryById(categoryMock.id)).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
+  });
+
   it('should be able to find category by name', async () => {
     const category = await service.findCategoryByName(categoryMock.name);
     expect(category).toEqual(categoryMock);
