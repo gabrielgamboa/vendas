@@ -8,6 +8,7 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { createProductMock } from '../__mocks__/create-product.mock';
 import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
+import { returnDeletedProductMock } from '../__mocks__/return-deleted-product.mock';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -28,6 +29,8 @@ describe('ProductService', () => {
           provide: getRepositoryToken(Product),
           useValue: {
             find: jest.fn().mockResolvedValue([productMock]),
+            findOne: jest.fn().mockResolvedValue(productMock),
+            delete: jest.fn().mockResolvedValue(returnDeletedProductMock),
             save: jest.fn().mockResolvedValue(productMock),
           },
         },
@@ -71,5 +74,15 @@ describe('ProductService', () => {
   it('should return error to list all products if products not found', async () => {
     jest.spyOn(productRepository, 'find').mockResolvedValue([]);
     expect(service.findAll()).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('should be able to delete a product', async () => {
+    const product = await service.deleteProductById(productMock.id);
+    expect(product).toEqual(returnDeletedProductMock);
+  });
+
+  it('should return error in delete product if product doesnt exists', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(null);
+    expect(service.deleteProductById(productMock.id)).rejects.toThrowError();
   });
 });
