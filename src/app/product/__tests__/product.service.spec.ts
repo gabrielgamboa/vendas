@@ -9,6 +9,7 @@ import { createProductMock } from '../__mocks__/create-product.mock';
 import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
 import { returnDeletedProductMock } from '../__mocks__/return-deleted-product.mock';
+import { rejects } from 'assert';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -51,9 +52,15 @@ describe('ProductService', () => {
   });
 
   it('should be able to create new product', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(null);
     const product = await service.createProduct(createProductMock);
     expect(product).toBeDefined();
     expect(product).toEqual(productMock);
+  });
+
+  it('should return error in create new product product already exists with same name', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(productMock);
+    expect(service.createProduct(createProductMock)).rejects.toThrowError();
   });
 
   it('should return error in create new product if category doesnt exists', async () => {
@@ -84,5 +91,18 @@ describe('ProductService', () => {
   it('should return error in delete product if product doesnt exists', async () => {
     jest.spyOn(productRepository, 'findOne').mockResolvedValue(null);
     expect(service.deleteProductById(productMock.id)).rejects.toThrowError();
+  });
+
+  it('should be able to find product by id', async () => {
+    const product = await service.findProductById(productMock.id);
+    expect(product).toBeDefined();
+    expect(product).toEqual(productMock);
+  });
+
+  it('should return error in find product by id if product doesnt exists', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(null);
+    expect(service.findProductById(productMock.id)).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
   });
 });

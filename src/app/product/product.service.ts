@@ -15,7 +15,19 @@ export class ProductService {
 
   async createProduct(data: CreateProductDto) {
     await this.categoryService.findCategoryById(data.categoryId);
+    await this.validateProductName(data.name);
+
     return await this.productRepository.save(data);
+  }
+
+  private async validateProductName(name: string): Promise<void> {
+    const product = await this.productRepository.findOne({
+      where: { name },
+    });
+
+    if (product) {
+      throw new BadRequestException(`Product with name ${name} already exists`);
+    }
   }
 
   async findAll(): Promise<Product[]> {
@@ -27,15 +39,22 @@ export class ProductService {
     return products;
   }
 
-  async deleteProductById(productId: number): Promise<DeleteResult> {
+  async findProductById(productId: number): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: {
         id: productId,
       },
     });
+
     if (!product) {
       throw new BadRequestException('Product not found');
     }
+
+    return product;
+  }
+
+  async deleteProductById(productId: number): Promise<DeleteResult> {
+    await this.findProductById(productId);
 
     return await this.productRepository.delete({ id: productId });
   }
