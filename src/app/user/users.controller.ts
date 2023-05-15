@@ -10,8 +10,10 @@ import {
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UserService } from './users.service';
 import { ReturnUserDto } from './dtos/return-user-dto';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('user')
+@ApiTags('User')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -33,6 +35,9 @@ export class UserController {
 
   @Post()
   @UsePipes(new ValidationPipe())
+  @ApiCreatedResponse({
+    description: 'User has been successfully created.',
+  })
   async create(@Body() data: CreateUserDto) {
     return await this.userService.createUser(data);
   }

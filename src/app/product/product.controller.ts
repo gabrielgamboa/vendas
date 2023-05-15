@@ -18,13 +18,16 @@ import { ReturnProductDto } from './dtos/return-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { DeleteResult } from 'typeorm';
 import { UpdateProductDto } from './dtos/update-product.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('product')
+@ApiTags('Product')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get()
   @AuthenticateAndAuthorizateGuard(UserType.Admin, UserType.User)
+  @ApiBearerAuth()
   async findAll(): Promise<ReturnProductDto[]> {
     return (await this.productService.findAll()).map(
       (product) => new ReturnProductDto(product),
@@ -34,6 +37,7 @@ export class ProductController {
   @Post()
   @AuthenticateAndAuthorizateGuard(UserType.Admin, UserType.User)
   @UsePipes(ValidationPipe)
+  @ApiBearerAuth()
   async createProduct(@Body() data: CreateProductDto): Promise<Product> {
     return await this.productService.createProduct(data);
   }
@@ -41,6 +45,7 @@ export class ProductController {
   @Put('/:productId')
   @AuthenticateAndAuthorizateGuard(UserType.Admin)
   @UsePipes(ValidationPipe)
+  @ApiBearerAuth()
   async updateProduct(
     @Body() data: UpdateProductDto,
     @Param('productId') productId: number,
@@ -50,6 +55,7 @@ export class ProductController {
 
   @Delete('/:productId')
   @AuthenticateAndAuthorizateGuard(UserType.Admin, UserType.User)
+  @ApiBearerAuth()
   async deleteProductById(
     @Param('productId') productId: number,
   ): Promise<DeleteResult> {

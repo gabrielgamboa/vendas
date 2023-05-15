@@ -11,8 +11,11 @@ import { ReturnCategoryDto } from './dtos/return-category.dto';
 import { AuthenticateAndAuthorizateGuard } from '../guards';
 import { UserType } from '../user/enum/user-type.enum';
 import { CreateCategoryDto } from './dtos/create-category.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('category')
+@ApiTags('Category')
+@ApiBearerAuth()
 @AuthenticateAndAuthorizateGuard(UserType.User, UserType.Admin)
 export class CategoryController {
   constructor(private categoryService: CategoryService) {}

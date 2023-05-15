@@ -12,9 +12,12 @@ import { UserType } from '../user/enum/user-type.enum';
 import { AuthenticateAndAuthorizateGuard } from '../guards';
 import { User } from '../decorators/user.decorator';
 import { ReturnAddressDto } from './dtos/return-address.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('address')
+@ApiTags('Address')
 @AuthenticateAndAuthorizateGuard(UserType.User, UserType.Admin)
+@ApiBearerAuth()
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
