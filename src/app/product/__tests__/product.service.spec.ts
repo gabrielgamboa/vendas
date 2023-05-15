@@ -9,7 +9,7 @@ import { createProductMock } from '../__mocks__/create-product.mock';
 import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
 import { returnDeletedProductMock } from '../__mocks__/return-deleted-product.mock';
-import { rejects } from 'assert';
+import { updateProductMock } from '../__mocks__/update-product.mock';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -104,5 +104,41 @@ describe('ProductService', () => {
     expect(service.findProductById(productMock.id)).rejects.toBeInstanceOf(
       BadRequestException,
     );
+  });
+
+  it('should be able to update an existing product', async () => {
+    const updatedProduct = await service.updateProductById(
+      updateProductMock,
+      productMock.id,
+    );
+
+    expect(updatedProduct).toEqual(productMock);
+  });
+
+  it('should be able to update an existing product', async () => {
+    const updatedProduct = await service.updateProductById(
+      updateProductMock,
+      productMock.id,
+    );
+
+    expect(updatedProduct).toEqual(productMock);
+  });
+
+  it('should return error in update if product doesnt exists', async () => {
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(null);
+    expect(
+      service.updateProductById(updateProductMock, productMock.id),
+    ).rejects.toThrowError();
+
+    expect(
+      service.updateProductById(updateProductMock, productMock.id),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('should return error in update if save crashes', async () => {
+    jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
+    expect(
+      service.updateProductById(updateProductMock, productMock.id),
+    ).rejects.toThrowError();
   });
 });
