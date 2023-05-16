@@ -5,6 +5,8 @@ import { User } from '../entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { userMock } from '../__mocks__/user.mock';
 import { createUserMock } from '../__mocks__/create-user.mock';
+import { updatePasswordMock } from '../__mocks__/update-user.mock';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('UserService', () => {
   let service: UserService;
@@ -75,5 +77,21 @@ describe('UserService', () => {
     expect(
       service.findUserByIdUsingReferences(userMock.id),
     ).rejects.toThrowError();
+  });
+
+  it('should be able to update user password', async () => {
+    const updated = await service.updatePasswordUser(
+      updatePasswordMock,
+      userMock.id,
+    );
+
+    expect(updated).toEqual(userMock);
+  });
+
+  it('should return error if user doesnt exists', async () => {
+    jest.spyOn(userRepository, 'findOne').mockResolvedValue(undefined);
+    expect(
+      service.updatePasswordUser(updatePasswordMock, userMock.id),
+    ).rejects.toBeInstanceOf(NotFoundException);
   });
 });
