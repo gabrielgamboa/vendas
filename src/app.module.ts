@@ -11,6 +11,7 @@ import { AuthModule } from './app/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { CategoryModule } from './app/category/category.module';
 import { ProductModule } from './app/product/product.module';
+import { CartModule } from './app/cart/cart.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ProductModule } from './app/product/product.module';
     AuthModule,
     CategoryModule,
     ProductModule,
+    CartModule,
   ],
 })
 export class AppModule {}

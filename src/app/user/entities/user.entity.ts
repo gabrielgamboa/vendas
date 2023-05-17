@@ -1,6 +1,7 @@
 import { Address } from '../../address/entities/address.entity';
 import { BaseEntity } from '../../../infra/db/base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
+import { Cart } from 'src/app/cart/entities/cart.entity';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -24,4 +25,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Address, (address) => address.user)
   addresses?: Address[];
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  carts: Cart[];
 }
