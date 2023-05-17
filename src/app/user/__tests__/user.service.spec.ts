@@ -9,7 +9,7 @@ import {
   updatePasswordInvalidMock,
   updatePasswordMock,
 } from '../__mocks__/update-user.mock';
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 
 describe('UserService', () => {
   let service: UserService;
