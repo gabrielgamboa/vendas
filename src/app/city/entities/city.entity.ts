@@ -1,32 +1,15 @@
+import { BaseEntity } from '../../../infra/db/base.entity';
 import { Address } from '../../address/entities/address.entity';
 import { State } from '../../state/entities/state.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 @Entity('city')
-export class City {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class City extends BaseEntity {
   @Column({ name: 'state_id', nullable: false })
   stateId: number;
 
   @Column({ nullable: false })
   name: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 
   @OneToMany(() => Address, (address) => address.city)
   addresses?: Address[];

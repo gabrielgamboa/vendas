@@ -1,4 +1,5 @@
 import { Category } from '../../category/entities/category.entity';
+import { BaseEntity } from '../../../infra/db/base.entity';
 import {
   Column,
   CreateDateColumn,
@@ -10,10 +11,7 @@ import {
 } from 'typeorm';
 
 @Entity('product')
-export class Product {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Product extends BaseEntity {
   @Column()
   name: string;
 
@@ -22,12 +20,6 @@ export class Product {
 
   @Column()
   image: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 
   @Column({ name: 'category_id', nullable: false })
   categoryId: number;

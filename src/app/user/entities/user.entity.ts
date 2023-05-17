@@ -1,18 +1,9 @@
 import { Address } from '../../address/entities/address.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { BaseEntity } from '../../../infra/db/base.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity('user')
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends BaseEntity {
   @Column({ nullable: false })
   name: string;
 
@@ -30,12 +21,6 @@ export class User {
 
   @Column({ name: 'type_user' })
   typeUser: number;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 
   @OneToMany(() => Address, (address) => address.user)
   addresses?: Address[];

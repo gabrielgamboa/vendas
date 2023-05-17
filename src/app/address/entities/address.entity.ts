@@ -1,3 +1,4 @@
+import { BaseEntity } from '../../../infra/db/base.entity';
 import { City } from '../../city/entities/city.entity';
 import { User } from '../../user/entities/user.entity';
 import {
@@ -11,10 +12,7 @@ import {
 } from 'typeorm';
 
 @Entity('address')
-export class Address {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Address extends BaseEntity {
   @Column({ name: 'user_id', nullable: false })
   userId: number;
 
@@ -29,12 +27,6 @@ export class Address {
 
   @Column({ name: 'city_id', nullable: false })
   cityId: number;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.addresses)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
