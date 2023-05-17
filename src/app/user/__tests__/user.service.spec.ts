@@ -5,7 +5,10 @@ import { User } from '../entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { userMock } from '../__mocks__/user.mock';
 import { createUserMock } from '../__mocks__/create-user.mock';
-import { updatePasswordMock } from '../__mocks__/update-user.mock';
+import {
+  updatePasswordInvalidMock,
+  updatePasswordMock,
+} from '../__mocks__/update-user.mock';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('UserService', () => {
@@ -93,5 +96,11 @@ describe('UserService', () => {
     expect(
       service.updatePasswordUser(updatePasswordMock, userMock.id),
     ).rejects.toBeInstanceOf(NotFoundException);
+  });
+
+  it('should return error if old password and user password arent equal', async () => {
+    expect(
+      service.updatePasswordUser(updatePasswordInvalidMock, userMock.id),
+    ).rejects.toThrowError();
   });
 });

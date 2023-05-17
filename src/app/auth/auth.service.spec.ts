@@ -52,20 +52,20 @@ describe('AuthService', () => {
   it('should return error when user email is invalid', async () => {
     // ver pq ta dando erro
     jest.spyOn(userService, 'findUserByEmail').mockResolvedValue(undefined);
-    expect(service.login(loginMock)).rejects.toBeInstanceOf(
+    return expect(service.login(loginMock)).rejects.toBeInstanceOf(
       UnauthorizedException,
     );
   });
 
   it('should return error when user password is invalid', async () => {
-    expect(
+    return expect(
       service.login({ ...loginMock, password: '123' }),
     ).rejects.toBeInstanceOf(UnauthorizedException);
   });
 
   it('should return error in UserService', async () => {
     jest.spyOn(userService, 'findUserByEmail').mockResolvedValue(undefined);
-    expect(service.login(loginMock)).rejects.toBeInstanceOf(
+    return expect(service.login(loginMock)).rejects.toBeInstanceOf(
       UnauthorizedException,
     );
   });
