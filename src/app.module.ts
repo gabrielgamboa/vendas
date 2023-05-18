@@ -13,11 +13,17 @@ import { CategoryModule } from './app/category/category.module';
 import { ProductModule } from './app/product/product.module';
 import { CartModule } from './app/cart/cart.module';
 import { CartProductModule } from './app/cart-product/cart-product.module';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { MailConfigService } from './infra/email/mail.config';
+import { EmailModule } from './app/email/email.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: ['.env.development.local'],
+    }),
+    MailerModule.forRootAsync({
+      useClass: MailConfigService,
     }),
     TypeOrmModule.forRootAsync({
       useFactory: DatabaseProvider,
@@ -33,6 +39,7 @@ import { CartProductModule } from './app/cart-product/cart-product.module';
     ProductModule,
     CartModule,
     CartProductModule,
+    EmailModule,
   ],
 })
 export class AppModule {}

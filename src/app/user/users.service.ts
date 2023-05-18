@@ -10,12 +10,14 @@ import { Repository } from 'typeorm';
 import { UserType } from './enum/user-type.enum';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { createHashedPassword, validatePassword } from '../../utils/password';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    private readonly emailService: EmailService,
   ) {}
 
   async createUser(data: CreateUserDto): Promise<User> {
@@ -27,6 +29,13 @@ export class UserService {
       throw new BadRequestException('Email registered in system');
 
     const passwordHash = await createHashedPassword(data.password);
+
+    await this.emailService.sendEmail({
+      to: `${data.email}`,
+      subject: 'Bem vindo ao Vendas Online!',
+      html: `<h1>Prezado</h1>,
+      <p>Seja bem-vindo(a) à nossa empresa! É uma satisfação tê-lo(a) como nosso(a) novo(a) cliente. Gostaríamos de aproveitar esta oportunidade para expressar nossa gratidão por escolher nossos serviços/produtos. </p>`,
+    });
 
     return await this.usersRepository.save({
       ...data,
