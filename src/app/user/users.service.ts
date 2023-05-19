@@ -11,6 +11,7 @@ import { UserType } from './enum/user-type.enum';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { createHashedPassword, validatePassword } from '../../utils/password';
 import { EmailService } from '../email/email.service';
+import { EmailTemplates } from '../../utils/create-email-template';
 
 @Injectable()
 export class UserService {
@@ -32,9 +33,8 @@ export class UserService {
 
     await this.emailService.sendEmail({
       to: `${data.email}`,
-      subject: 'Bem vindo ao Vendas Online!',
-      html: `<h1>Prezado</h1>,
-      <p>Seja bem-vindo(a) à nossa empresa! É uma satisfação tê-lo(a) como nosso(a) novo(a) cliente. Gostaríamos de aproveitar esta oportunidade para expressar nossa gratidão por escolher nossos serviços/produtos. </p>`,
+      subject: EmailTemplates.subject.welcome,
+      html: EmailTemplates.htmlTexts.welcome(data.name),
     });
 
     return await this.usersRepository.save({
