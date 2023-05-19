@@ -1,7 +1,7 @@
 import { Address } from '../../address/entities/address.entity';
 import { BaseEntity } from '../../../infra/db/base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
-import { Cart } from 'src/app/cart/entities/cart.entity';
+import { Cart } from '../../../app/cart/entities/cart.entity';
 
 @Entity('user')
 export class User extends BaseEntity {

@@ -1,7 +1,7 @@
-import { User } from 'src/app/user/entities/user.entity';
+import { User } from '../../../app/user/entities/user.entity';
 import { BaseEntity } from '../../../infra/db/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { CartProduct } from 'src/app/cart-product/entities/cart-product.entity';
+import { CartProduct } from '../../../app/cart-product/entities/cart-product.entity';
 
 @Entity('cart')
 export class Cart extends BaseEntity {

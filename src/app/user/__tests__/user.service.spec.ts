@@ -10,10 +10,12 @@ import {
   updatePasswordMock,
 } from '../__mocks__/update-user.mock';
 import { NotFoundException } from '@nestjs/common';
+import { EmailService } from '../../../app/email/email.service';
 
 describe('UserService', () => {
   let service: UserService;
   let userRepository: Repository<User>;
+  let emailService: EmailService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -24,6 +26,12 @@ describe('UserService', () => {
           useValue: {
             findOne: jest.fn().mockResolvedValue(userMock),
             save: jest.fn().mockResolvedValue(userMock),
+          },
+        },
+        {
+          provide: EmailService,
+          useValue: {
+            sendEmail: jest.fn().mockResolvedValue(undefined),
           },
         },
       ],

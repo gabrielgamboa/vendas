@@ -20,7 +20,7 @@ describe('EmailService', () => {
         {
           provide: MailerService,
           useValue: {
-            sendMail: jest.fn().mockResolvedValue(null),
+            sendMail: jest.fn().mockResolvedValue(undefined),
           },
         },
       ],
