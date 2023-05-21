@@ -8,6 +8,9 @@ export class Cart extends BaseEntity {
   @Column({ name: 'user_id' })
   userId: number;
 
+  @Column()
+  active: boolean;
+
   @ManyToOne(() => User, (user) => user.carts)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   user?: User;

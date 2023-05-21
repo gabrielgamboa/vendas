@@ -10,9 +10,19 @@ import {
 import { CartService } from './cart.service';
 import { AuthenticateAndAuthorizateGuard } from '../guards';
 import { UserType } from '../user/enum/user-type.enum';
+import { InsertProductInCartDto } from './dtos/insert-product-in-cart.dto';
+import { User } from '../decorators/user.decorator';
 
 @Controller('cart')
-@AuthenticateAndAuthorizateGuard(UserType.User)
+@AuthenticateAndAuthorizateGuard(UserType.User, UserType.Admin)
 export class CartController {
   constructor(private readonly cartService: CartService) {}
+
+  @Post()
+  async insertProductInCart(
+    @Body() data: InsertProductInCartDto,
+    @User('id') userId: number,
+  ) {
+    return this.cartService.insertProductInCart(data, userId);
+  }
 }
