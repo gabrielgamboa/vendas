@@ -31,10 +31,15 @@ export class CartService {
     return this.cartRepository.save({ userId, active: true });
   }
 
-  async insertProductInCart(data: InsertProductInCartDto, userId: number) {
+  async insertProductInCart(
+    data: InsertProductInCartDto,
+    userId: number,
+  ): Promise<Cart> {
     const cart = await this.findActiveCartByUserId(userId).catch(async () => {
       return this.createCart(userId);
     });
+
+    await this.cartProductService.insertProductInCart(data, cart);
 
     return cart;
   }
