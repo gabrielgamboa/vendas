@@ -9,8 +9,8 @@ import {
   updatePasswordInvalidMock,
   updatePasswordMock,
 } from '../__mocks__/update-user.mock';
-import { NotFoundException } from '@nestjs/common';
 import { EmailService } from '../../../app/email/email.service';
+import { BadRequestException } from '@nestjs/common';
 
 describe('UserService', () => {
   let service: UserService;
@@ -103,7 +103,7 @@ describe('UserService', () => {
     jest.spyOn(userRepository, 'findOne').mockResolvedValue(undefined);
     expect(
       service.updatePasswordUser(updatePasswordMock, userMock.id),
-    ).rejects.toBeInstanceOf(NotFoundException);
+    ).rejects.toBeInstanceOf(BadRequestException);
   });
 
   it('should return error if old password and user password arent equal', async () => {

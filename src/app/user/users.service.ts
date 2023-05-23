@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -55,7 +51,7 @@ export class UserService {
       },
     });
 
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) throw new BadRequestException('User not found');
 
     return user;
   }
@@ -74,7 +70,7 @@ export class UserService {
       },
     });
 
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) throw new BadRequestException('User not found');
 
     return user;
   }
@@ -85,7 +81,7 @@ export class UserService {
     });
 
     if (!user)
-      throw new NotFoundException(`User with email ${email} not found`);
+      throw new BadRequestException(`User with email ${email} not found`);
 
     return user;
   }

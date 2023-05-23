@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { City } from './entities/city.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -35,7 +35,8 @@ export class CityService {
       },
     });
 
-    if (!city) throw new NotFoundException(`City with id ${cityId} not found`);
+    if (!city)
+      throw new BadRequestException(`City with id ${cityId} not found`);
 
     return city;
   }

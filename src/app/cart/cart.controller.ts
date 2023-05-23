@@ -13,6 +13,7 @@ import { UserType } from '../user/enum/user-type.enum';
 import { InsertProductInCartDto } from './dtos/insert-product-in-cart.dto';
 import { User } from '../decorators/user.decorator';
 import { Cart } from './entities/cart.entity';
+import { ReturnCartDto } from './dtos/return-cart.dto';
 
 @Controller('cart')
 @AuthenticateAndAuthorizateGuard(UserType.User, UserType.Admin)
@@ -23,7 +24,9 @@ export class CartController {
   async insertProductInCart(
     @Body() data: InsertProductInCartDto,
     @User('id') userId: number,
-  ): Promise<Cart> {
-    return this.cartService.insertProductInCart(data, userId);
+  ): Promise<ReturnCartDto> {
+    return new ReturnCartDto(
+      await this.cartService.insertProductInCart(data, userId),
+    );
   }
 }

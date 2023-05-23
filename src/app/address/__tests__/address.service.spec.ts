@@ -9,7 +9,6 @@ import { userMock } from '../../user/__mocks__/user.mock';
 import { UserService } from '../../user/users.service';
 import { CityService } from '../../city/city.service';
 import { cityMock } from '../../city/__mocks__/city.mock';
-import { NotFoundException } from '@nestjs/common';
 
 describe('AddressService', () => {
   let service: AddressService;
@@ -87,7 +86,7 @@ describe('AddressService', () => {
     jest.spyOn(addressRepository, 'find').mockResolvedValue(undefined);
     expect(service.findAddressByUserId(userMock.id)).rejects.toThrowError();
     expect(service.findAddressByUserId(userMock.id)).rejects.toBeInstanceOf(
-      NotFoundException,
+      BadRequestException,
     );
   });
 });

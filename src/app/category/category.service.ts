@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -48,7 +44,7 @@ export class CategoryService {
     const categories = await this.categoryRepository.find();
 
     if (!categories || !categories.length) {
-      throw new NotFoundException('Categories not found');
+      throw new BadRequestException('Categories not found');
     }
 
     return categories;

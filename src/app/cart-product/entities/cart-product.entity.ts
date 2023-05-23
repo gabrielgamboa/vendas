@@ -14,11 +14,11 @@ export class CartProduct extends BaseEntity {
   @Column()
   amount: number;
 
-  @ManyToOne(() => Cart, (cart) => cart.cartProduct)
+  @ManyToOne(() => Cart, (cart) => cart.cartProducts)
   @JoinColumn({ name: 'cart_id', referencedColumnName: 'id' })
   cart?: Cart;
 
-  @ManyToOne(() => Product, (product) => product.cartProduct)
+  @ManyToOne(() => Product, (product) => product.cartProducts)
   @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product?: Product;
 }

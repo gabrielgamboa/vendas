@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from './entities/address.entity';
 import { Repository } from 'typeorm';
@@ -32,7 +32,7 @@ export class AddressService {
     });
 
     if (!addresses || !addresses.length)
-      throw new NotFoundException(
+      throw new BadRequestException(
         `Address not found for user with id: ${userId}`,
       );
 
