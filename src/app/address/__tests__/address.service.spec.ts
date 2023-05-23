@@ -9,6 +9,7 @@ import { userMock } from '../../user/__mocks__/user.mock';
 import { UserService } from '../../user/users.service';
 import { CityService } from '../../city/city.service';
 import { cityMock } from '../../city/__mocks__/city.mock';
+import { BadRequestException } from '@nestjs/common';
 
 describe('AddressService', () => {
   let service: AddressService;
