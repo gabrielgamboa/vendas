@@ -52,6 +52,8 @@ export class CartService {
 
     await this.cartProductService.insertProductInCart(data, cart);
 
-    return this.findActiveCartByUserId(userId, true);
+    console.log(cart);
+
+    return cart;
   }
 }

@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AuthenticateAndAuthorizateGuard } from '../guards';
@@ -21,6 +23,7 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post()
+  @UsePipes(ValidationPipe)
   async insertProductInCart(
     @Body() data: InsertProductInCartDto,
     @User('id') userId: number,
@@ -28,5 +31,10 @@ export class CartController {
     return new ReturnCartDto(
       await this.cartService.insertProductInCart(data, userId),
     );
+  }
+
+  @Get()
+  async findCartByUserId(@User('id') userId: number): Promise<ReturnCartDto> {
+    return new ReturnCartDto(await this.cartService.findActiveCartByUserId(userId, true));
   }
 }
