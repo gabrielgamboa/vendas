@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Cart } from './entities/cart.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { InsertProductInCartDto } from './dtos/insert-product-in-cart.dto';
 import { CartProductService } from '../cart-product/cart-product.service';
 
@@ -15,6 +15,20 @@ export class CartService {
 
   async createCart(userId: number): Promise<Cart> {
     return this.cartRepository.save({ userId, active: true });
+  }
+
+  async clearCart(userId: number): Promise<DeleteResult> {
+    const cart = await this.cartRepository.findOne({ where: { userId} });
+
+    await this.cartRepository.save({
+      ...cart,
+      active: false
+    });
+
+    return {
+      raw: [],
+      affected: 1
+    }
   }
 
   async findActiveCartByUserId(

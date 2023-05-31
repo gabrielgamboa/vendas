@@ -16,6 +16,7 @@ import { InsertProductInCartDto } from './dtos/insert-product-in-cart.dto';
 import { User } from '../decorators/user.decorator';
 import { Cart } from './entities/cart.entity';
 import { ReturnCartDto } from './dtos/return-cart.dto';
+import { DeleteResult } from 'typeorm';
 
 @Controller('cart')
 @AuthenticateAndAuthorizateGuard(UserType.User, UserType.Admin)
@@ -36,5 +37,10 @@ export class CartController {
   @Get()
   async findCartByUserId(@User('id') userId: number): Promise<ReturnCartDto> {
     return new ReturnCartDto(await this.cartService.findActiveCartByUserId(userId, true));
+  }
+
+  @Delete()
+  async clearCart(@User('id') userId: number): Promise<DeleteResult> {
+    return this.cartService.clearCart(userId);
   }
 }
