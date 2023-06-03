@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UsePipes,
@@ -14,7 +13,6 @@ import { AuthenticateAndAuthorizateGuard } from '../guards';
 import { UserType } from '../user/enum/user-type.enum';
 import { InsertProductInCartDto } from './dtos/insert-product-in-cart.dto';
 import { User } from '../decorators/user.decorator';
-import { Cart } from './entities/cart.entity';
 import { ReturnCartDto } from './dtos/return-cart.dto';
 import { DeleteResult } from 'typeorm';
 
@@ -36,11 +34,21 @@ export class CartController {
 
   @Get()
   async findCartByUserId(@User('id') userId: number): Promise<ReturnCartDto> {
-    return new ReturnCartDto(await this.cartService.findActiveCartByUserId(userId, true));
+    return new ReturnCartDto(
+      await this.cartService.findActiveCartByUserId(userId, true),
+    );
   }
 
   @Delete()
   async clearCart(@User('id') userId: number): Promise<DeleteResult> {
     return this.cartService.clearCart(userId);
+  }
+
+  @Delete('/product/:productId')
+  async deleteProductCart(
+    @Param('productId') productId: number,
+    @User('id') userId: number,
+  ): Promise<DeleteResult> {
+    return this.cartService.deleteProductInCart(productId, userId);
   }
 }

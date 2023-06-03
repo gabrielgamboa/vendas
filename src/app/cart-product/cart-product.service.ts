@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CartProduct } from './entities/cart-product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InsertProductInCartDto } from '../cart/dtos/insert-product-in-cart.dto';
@@ -61,5 +61,12 @@ export class CartProductService {
       ...cartProduct,
       amount: cartProduct.amount + data.amount,
     });
+  }
+
+  async deleteProductCart(
+    productId: number,
+    cartId: number,
+  ): Promise<DeleteResult> {
+    return this.cartProductRepository.delete({ productId, cartId });
   }
 }

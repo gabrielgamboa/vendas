@@ -22,13 +22,13 @@ export class CartService {
 
     await this.cartRepository.save({
       ...cart,
-      active: false
+      active: false,
     });
 
     return {
       raw: [],
-      affected: 1
-    }
+      affected: 1,
+    };
   }
 
   async findActiveCartByUserId(
@@ -67,5 +67,14 @@ export class CartService {
     await this.cartProductService.insertProductInCart(data, cart);
 
     return cart;
+  }
+
+  async deleteProductInCart(
+    productId: number,
+    userId: number,
+  ): Promise<DeleteResult> {
+    const cart = await this.findActiveCartByUserId(userId);
+
+    return this.cartProductService.deleteProductCart(productId, cart.id);
   }
 }
