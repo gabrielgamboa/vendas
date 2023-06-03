@@ -18,7 +18,7 @@ export class CartService {
   }
 
   async clearCart(userId: number): Promise<DeleteResult> {
-    const cart = await this.cartRepository.findOne({ where: { userId} });
+    const cart = await this.findActiveCartByUserId(userId);
 
     await this.cartRepository.save({
       ...cart,
@@ -65,8 +65,6 @@ export class CartService {
     });
 
     await this.cartProductService.insertProductInCart(data, cart);
-
-    console.log(cart);
 
     return cart;
   }
