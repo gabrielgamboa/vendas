@@ -32,7 +32,7 @@ export class ProductService {
   }
 
   async findAll(): Promise<Product[]> {
-    const products = await this.productRepository.find();
+    const products = await this.productRepository.find({ relations: { category: true }});
 
     if (!products || !products.length)
       throw new BadRequestException('Products not found');
