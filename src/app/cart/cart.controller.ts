@@ -7,6 +7,7 @@ import {
   Delete,
   UsePipes,
   ValidationPipe,
+  Patch,
 } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { AuthenticateAndAuthorizateGuard } from '../guards';
@@ -15,6 +16,8 @@ import { InsertProductInCartDto } from './dtos/insert-product-in-cart.dto';
 import { User } from '../decorators/user.decorator';
 import { ReturnCartDto } from './dtos/return-cart.dto';
 import { DeleteResult } from 'typeorm';
+import { UpdateProductInCartDto } from './dtos/update-product-in-cart-dto';
+import { Cart } from './entities/cart.entity';
 
 @Controller('cart')
 @AuthenticateAndAuthorizateGuard(UserType.User, UserType.Admin)
@@ -37,6 +40,12 @@ export class CartController {
     return new ReturnCartDto(
       await this.cartService.findActiveCartByUserId(userId, true),
     );
+  }
+
+  @Patch()
+  @UsePipes(ValidationPipe)
+  async updateProductInCart(@Body() data: UpdateProductInCartDto, @User('id') userId: number): Promise<Cart> {
+    return this.cartService.updateProductInCart(data, userId);
   }
 
   @Delete()
