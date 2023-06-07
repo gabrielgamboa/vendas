@@ -1,3 +1,4 @@
+import { Order } from 'src/app/order/entities/order.entity';
 import { BaseEntity } from '../../../infra/db/base.entity';
 import { City } from '../../city/entities/city.entity';
 import { User } from '../../user/entities/user.entity';
@@ -7,6 +8,7 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -35,4 +37,7 @@ export class Address extends BaseEntity {
   @ManyToOne(() => City, (city) => city.addresses)
   @JoinColumn({ name: 'city_id', referencedColumnName: 'id' })
   city?: City;
+
+  @OneToMany(() => Order, (order) => order.address)
+  orders?: Order[];
 }

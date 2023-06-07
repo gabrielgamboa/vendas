@@ -2,6 +2,7 @@ import { Category } from '../../category/entities/category.entity';
 import { BaseEntity } from '../../../infra/db/base.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { CartProduct } from '../../../app/cart-product/entities/cart-product.entity';
+import { OrderProduct } from 'src/app/order-product/entities/order-product.entity';
 
 @Entity('product')
 export class Product extends BaseEntity {
@@ -23,4 +24,7 @@ export class Product extends BaseEntity {
 
   @OneToMany(() => CartProduct, (cartProduct) => cartProduct.product)
   cartProducts?: CartProduct[];
+
+  @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.product)
+  orderProduct?: OrderProduct[];
 }

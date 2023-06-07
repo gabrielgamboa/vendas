@@ -1,7 +1,12 @@
+import { Order } from 'src/app/order/entities/order.entity';
+import { PaymentStatus } from 'src/app/payment-status/entities/payment-status.entity';
+import { BaseEntity } from 'src/infra/db/base.entity';
 import {
-    BaseEntity,
   Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   TableInheritance,
 } from 'typeorm';
 
@@ -22,4 +27,12 @@ export abstract class Payment extends BaseEntity {
 
   @Column({ name: 'type', nullable: false })
   type: string;
+
+
+  @OneToMany(() => Order, (order) => order.payment)
+  orders?: Order[];
+  
+  @ManyToOne(() => PaymentStatus, (paymentStatus) => paymentStatus.payments)
+  @JoinColumn({ name: 'status_id', referencedColumnName: 'id'})
+  paymentStatus?: PaymentStatus;
 }

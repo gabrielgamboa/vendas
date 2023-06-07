@@ -1,5 +1,5 @@
 import { ChildEntity, Column } from 'typeorm';
-import { Payment } from './payment';
+import { Payment } from './payment.entity';
 
 @ChildEntity()
 export class PaymentPixEntity extends Payment {
