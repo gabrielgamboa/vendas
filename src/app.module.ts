@@ -19,6 +19,8 @@ import { EmailModule } from './app/email/email.module';
 import { JwtGlobalModule } from './app/auth/jwt.module';
 import { PaymentStatusModule } from './app/payment-status/payment-status.module';
 import { PaymentModule } from './app/payment/payment.module';
+import { OrderModule } from './app/order/order.module';
+import { OrderProductModule } from './app/order-product/order-product.module';
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import { PaymentModule } from './app/payment/payment.module';
     EmailModule,
     PaymentStatusModule,
     PaymentModule,
+    OrderModule,
+    OrderProductModule,
   ],
 })
 export class AppModule {}
