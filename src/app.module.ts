@@ -17,6 +17,8 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MailConfigService } from './infra/email/mail.config';
 import { EmailModule } from './app/email/email.module';
 import { JwtGlobalModule } from './app/auth/jwt.module';
+import { PaymentStatusModule } from './app/payment-status/payment-status.module';
+import { PaymentModule } from './app/payment/payment.module';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { JwtGlobalModule } from './app/auth/jwt.module';
     CartModule,
     CartProductModule,
     EmailModule,
+    PaymentStatusModule,
+    PaymentModule,
   ],
 })
 export class AppModule {}
