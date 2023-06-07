@@ -16,6 +16,7 @@ import { CartProductModule } from './app/cart-product/cart-product.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { MailConfigService } from './infra/email/mail.config';
 import { EmailModule } from './app/email/email.module';
+import { JwtGlobalModule } from './app/auth/jwt.module';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { EmailModule } from './app/email/email.module';
     TypeOrmModule.forRootAsync({
       useFactory: DatabaseProvider,
     }),
-    JwtModule,
+    JwtGlobalModule,
     UserModule,
     AddressModule,
     CityModule,
